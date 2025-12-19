@@ -137,7 +137,7 @@ export default function Page() {
             max-h-[calc(100vh-5rem)] overflow-y-auto
           `}
           >
-            <FilterSidebar filters={filters} onFilterChange={setFilters} />
+            {/*<FilterSidebar filters={filters} onFilterChange={setFilters} />*/}
           </aside>
 
           {/* Activity Grid */}
@@ -151,7 +151,7 @@ export default function Page() {
 
           {/* Connect the Dots Map */}
           <aside className="hidden xl:block sticky top-24 self-start">
-            <ConnectTheDotsMap />
+            {/*<ConnectTheDotsMap />*/}
           </aside>
         </div>
       </main>
