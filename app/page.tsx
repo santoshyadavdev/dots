@@ -1,35 +1,47 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { SearchBar } from "@/components/search-bar"
-import { FilterSidebar } from "@/components/filter-sidebar"
-import { ActivityGrid } from "@/components/activity-grid"
-import { ConnectTheDotsMap } from "@/components/connect-the-dots-map"
-import { VoicePlanner } from "@/components/voice-planner"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { useState } from "react";
+import { SearchBar } from "@/components/search-bar";
+import { FilterSidebar } from "@/components/filter-sidebar";
+import { ActivityGrid } from "@/components/activity-grid";
+import { ConnectTheDotsMap } from "@/components/connect-the-dots-map";
+import { VoicePlanner } from "@/components/voice-planner";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 
 export default function Page() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [filters, setFilters] = useState({
     napTimeFriendly: false,
     budget: "all",
     environment: "all",
     educationalLevel: "all",
-  })
+  });
 
   const [searchParams, setSearchParams] = useState({
     destination: "",
     childrenAges: [] as number[],
-  })
+  });
 
-  const handleVoiceItinerary = (data: { destination: string; travelers: number; interests: string }) => {
-    console.log("[v0] Voice itinerary captured:", data)
+  const [aiRecommendations, setAiRecommendations] = useState<any>(null);
+
+  const handleVoiceItinerary = (data: {
+    destination: string;
+    travelers: number;
+    interests: string;
+    recommendations?: any;
+  }) => {
+    console.log("[v0] Voice itinerary captured:", data);
     setSearchParams({
       destination: data.destination,
       childrenAges: [], // Could be parsed from travelers info
-    })
-  }
+    });
+
+    // Store AI-generated recommendations
+    if (data.recommendations) {
+      setAiRecommendations(data.recommendations);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,21 +63,39 @@ export default function Page() {
               </div>
             </div>
             <nav className="hidden md:flex items-center gap-6">
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Explore
               </a>
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
                 My Trips
               </a>
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Saved
               </a>
               <Button size="sm" className="rounded-full">
                 Sign In
               </Button>
             </nav>
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
-              {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              {sidebarOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -80,7 +110,8 @@ export default function Page() {
               Plan Your Perfect Family Adventure
             </h2>
             <p className="text-lg text-muted-foreground text-pretty">
-              Discover kid-friendly activities and connect the dots for unforgettable memories
+              Discover kid-friendly activities and connect the dots for
+              unforgettable memories
             </p>
           </div>
 
@@ -88,9 +119,9 @@ export default function Page() {
             <VoicePlanner onItineraryCapture={handleVoiceItinerary} />
           </div>
 
-          <div className="text-center mb-4">
+          {/*     <div className="text-center mb-4">
             <p className="text-sm text-muted-foreground">or search manually</p>
-          </div>
+          </div> */}
 
           <SearchBar onSearch={setSearchParams} />
         </div>
@@ -111,7 +142,11 @@ export default function Page() {
 
           {/* Activity Grid */}
           <div className="lg:col-span-1">
-            <ActivityGrid filters={filters} searchParams={searchParams} />
+            <ActivityGrid
+              filters={filters}
+              searchParams={searchParams}
+              aiRecommendations={aiRecommendations}
+            />
           </div>
 
           {/* Connect the Dots Map */}
@@ -121,5 +156,5 @@ export default function Page() {
         </div>
       </main>
     </div>
-  )
+  );
 }

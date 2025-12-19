@@ -1,39 +1,39 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Search, Plus, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import { Search, Plus, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 interface SearchBarProps {
-  onSearch: (params: { destination: string; childrenAges: number[] }) => void
+  onSearch: (params: { destination: string; childrenAges: number[] }) => void;
 }
 
 export function SearchBar({ onSearch }: SearchBarProps) {
-  const [destination, setDestination] = useState("")
-  const [childrenAges, setChildrenAges] = useState<number[]>([])
-  const [ageInput, setAgeInput] = useState("")
+  const [destination, setDestination] = useState("");
+  const [childrenAges, setChildrenAges] = useState<number[]>([]);
+  const [ageInput, setAgeInput] = useState("");
 
   const addAge = () => {
-    const age = Number.parseInt(ageInput)
+    const age = Number.parseInt(ageInput);
     if (!isNaN(age) && age >= 0 && age <= 18) {
-      setChildrenAges([...childrenAges, age])
-      setAgeInput("")
+      setChildrenAges([...childrenAges, age]);
+      setAgeInput("");
     }
-  }
+  };
 
   const removeAge = (index: number) => {
-    setChildrenAges(childrenAges.filter((_, i) => i !== index))
-  }
+    setChildrenAges(childrenAges.filter((_, i) => i !== index));
+  };
 
   const handleSearch = () => {
-    onSearch({ destination, childrenAges })
-  }
+    onSearch({ destination, childrenAges });
+  };
 
   return (
-    <div className="max-w-4xl mx-auto bg-card rounded-3xl shadow-lg border border-border p-6">
-      <div className="space-y-4">
+    <div className="">
+      {/* <div className="space-y-4">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
@@ -86,7 +86,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
         <Button onClick={handleSearch} className="w-full h-12 rounded-2xl text-lg font-medium">
           Find Activities
         </Button>
-      </div>
+      </div> */}
     </div>
-  )
+  );
 }
